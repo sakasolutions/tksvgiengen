@@ -2,7 +2,9 @@
 
 ## Status
 
-**Ehrenamtliches Projekt von SAKA Solutions.** Erste von maximal zwei kostenlosen Vereinsarbeiten pro Jahr.
+**Vereinsarbeit, kein Kundenprojekt.** Sinan ist selbst im Vorstand des TKSV Giengen, der gesamte Vorstand weiß Bescheid. Freigaben, Inhalte und Veröffentlichung entscheidet er mit — die übliche Wartezeit bei Vereinsprojekten entfällt.
+
+**Zählt nicht gegen das Ehrenamts-Kontingent.** Der eigene Verein ist Vereinsarbeit. Ein kostenloses Projekt für einen *fremden* Verein wäre eine Akquise-Investition — davon maximal zwei pro Jahr.
 
 Der TKSV Giengen ist ein echter Verein, keine Konzeptseite. Alle Inhalte müssen stimmen — Mannschaften, Spieltermine, Ansprechpartner und Sponsoren werden vom Verein geliefert und nicht erfunden.
 
@@ -12,7 +14,11 @@ Kein Gefallen, sondern der tragfähigste Akquisekanal für einen Ein-Personen-Be
 
 - Gute Arbeit wird gesehen, ohne dass etwas verkauft werden muss.
 - Der Verein teilt die Seite in seinen Kanälen, es spricht sich im Ort herum.
-- **Der eigentliche Wert ist der Sponsorenbereich.** Das sind Betriebe, die nachweislich Geld für Sichtbarkeit ausgeben — eine vorqualifizierte Liste, die in keinem Branchenverzeichnis steht. Als derjenige, der die Vereinsseite gemacht hat, ist man dort kein Fremder mehr.
+- **Der eigentliche Wert ist der Sponsorenbereich.** Das sind Betriebe, die nachweislich Geld für Sichtbarkeit ausgeben — eine vorqualifizierte Liste, die in keinem Branchenverzeichnis steht.
+
+### Grenze beim Sponsorenkontakt
+
+Als Vorstandsmitglied ist Sinan für die Sponsoren jemand mit Amt, nicht der Dienstleister von außen. **Dort wird nicht verkauft.** Die Vereinsseite wird gut gemacht, die Sponsorenlogos sehen ordentlich aus, und wer von sich aus fragt, bekommt eine Antwort. Das Amt verschafft Anwesenheit, keine Verkaufslizenz — und genau bei diesen Leuten wiegt der Ruf am schwersten.
 
 ## Regeln für ehrenamtliche Projekte
 
@@ -24,9 +30,8 @@ Kein Gefallen, sondern der tragfähigste Akquisekanal für einen Ein-Personen-Be
 ## OFFEN
 
 - [ ] **„Website von SAKA Solutions" mit Link in den Footer.** Steht aktuell nicht drin. Das ist die einzige Gegenleistung des Projekts — ohne den Hinweis ist die Arbeit im Wortsinn umsonst. Mit dem Verein abstimmen, das ist bei Vereinsseiten völlig üblich.
-- [ ] Klären, ob das Projekt offiziell mit dem Verein läuft oder bisher auf Verdacht gebaut wurde.
 - [ ] Echte Inhalte vom Verein einholen: Mannschaften, Spielplan, Ansprechpartner, Sponsorenlogos.
-- [ ] Impressum und Datenschutz — ein Verein braucht beides, die Verantwortung liegt beim Vorstand.
+- [ ] **Impressum und Datenschutz** — ein Verein braucht beides. Die Verantwortung liegt beim Vorstand, also bei ihm selbst.
 - [ ] Veröffentlichung klären: eigene Domain des Vereins oder GitHub Pages.
 
 ## Diese Seite
@@ -54,4 +59,4 @@ Kein Gefallen, sondern der tragfähigste Akquisekanal für einen Ein-Personen-Be
 ## Entscheidungen & Verlauf
 
 - 2026-09-14: Erste Fassung der Seite gebaut.
-- 2026-09-24: Als Repo gesichert. Festgelegt, dass ehrenamtliche Vereinsprojekte auf zwei pro Jahr begrenzt bleiben und der Fußzeilen-Hinweis Pflicht ist.
+- 2026-09-24: Als Repo gesichert. Geklärt: Sinan ist selbst im Vorstand, der Vorstand weiß Bescheid. Festgehalten, dass der eigene Verein nicht gegen das Ehrenamts-Kontingent zählt und dass beim Sponsorenkontakt nicht verkauft wird.
