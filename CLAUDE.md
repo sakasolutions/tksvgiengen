@@ -29,17 +29,21 @@ Als Vorstandsmitglied ist Sinan für die Sponsoren jemand mit Amt, nicht der Die
 
 ## OFFEN
 
-- [ ] **„Website von SAKA Solutions" mit Link in den Footer.** Steht aktuell nicht drin. Das ist die einzige Gegenleistung des Projekts — ohne den Hinweis ist die Arbeit im Wortsinn umsonst. Mit dem Verein abstimmen, das ist bei Vereinsseiten völlig üblich.
-- [ ] Echte Inhalte vom Verein einholen: Mannschaften, Spielplan, Ansprechpartner, Sponsorenlogos.
-- [ ] **Impressum und Datenschutz** — ein Verein braucht beides. Die Verantwortung liegt beim Vorstand, also bei ihm selbst.
-- [ ] Veröffentlichung klären: eigene Domain des Vereins oder GitHub Pages.
+- [x] **„Website von SAKA Solutions" mit Link in den Footer.** Steht drin, verlinkt auf saka-it.de/webdesign. Zusätzlich im Impressum unter „Gestaltung und Umsetzung". Mit dem Vorstand noch kurz bestätigen.
+- [ ] **Impressum und Datenschutz mit Vereinsdaten füllen.** Seiten stehen, alle Lücken sind rot markiert (`class="placeholder"`): Vereinsname laut Satzung, Anschrift, vertretungsberechtigter Vorstand, Registergericht und VR-Nummer, Kontakt, Hosting-Anbieter, Bildnachweis, Grundlage für die Mannschaftsfotos. Die Verantwortung liegt beim Vorstand, also bei ihm selbst. Texte sind keine Rechtsberatung, vor dem Ausfüllen einmal gegenlesen.
+- [ ] Echte Inhalte in `daten.js` eintragen: Instagram-Link, Ansprechpartner, Sportplatz-Adresse, Trainingszeiten und Trainer, Sponsoren mit Logos.
+- [ ] Veröffentlichung klären: Läuft aktuell öffentlich über GitHub Pages aus `main` (https://sakasolutions.github.io/tksvgiengen/). Jeder Push auf `main` geht sofort live. Bei eigener Domain: `og:url`, `og:image`, JSON-LD-Adressen umstellen, `canonical`, `robots.txt` und `sitemap.xml` ergänzen.
 
 ## Diese Seite
 
-- **Aufbau:** `index.html`, `styles.css`, `script.js`, Bilder in `assets/`. Kein Framework, kein Build-Schritt.
-- **Abschnitte:** `#start` · `#aktuelles` · `#mannschaften` · `#spiele` · `#verein` · `#sponsoren`
-- **H1:** `#HedefŞampiyonluk` — türkisch für „Ziel Meisterschaft". Passt zum Verein, sollte aber für Suchmaschinen durch eine Zeile ergänzt werden, die „TKSV Giengen" und „Fußball" enthält.
+- **Aufbau:** `index.html`, `impressum.html`, `datenschutz.html`, `styles.css`, `script.js`, `daten.js`, Bilder in `assets/`. Kein Framework, kein Build-Schritt.
+- **Inhalte pflegen:** nur in `daten.js`. Anleitung steht oben in der Datei. Leere Felder blendet die Seite aus, ohne Instagram-Link verschwindet „Aktuelles" samt Menüpunkt, ohne Sponsoren zeigt der Bereich nur „Partner werden". Kein Admin-Panel, bewusst.
+- **Abschnitte:** `#start` · `#aktuelles` · `#mannschaften` · `#spiele` · `#verein` · `#sponsoren` · `#kontakt`
+- **Hero:** statisch, Mannschaftsfoto läuft per `mask-image` nach unten aus, Text liegt im Verlauf. Darunter der Spielbalken: zeigt ein eingetragenes Spiel bis zwei Stunden nach Anpfiff, sonst den Link zum Spielplan.
+- **H1:** `#HedefŞampiyonluk`, türkisch für „Ziel Meisterschaft". Ergänzt durch die Zeile „TKSV Giengen · Fußball seit 1986" darüber.
 - **Titel:** „TKSV Giengen | Fußball in Giengen"
+- **Bilder:** Originale (`hero1.png`, `logo/logo.png`) bleiben als Quelle im Repo, ausgeliefert werden die verkleinerten Fassungen (`hero-800/1200/1920.webp`, `hero-1600.jpg`, `logo/logo-256.png`, `og-image.jpg`). Bei neuem Mannschaftsfoto alle neu erzeugen, z. B. `cwebp -q 78 -resize 1920 0`.
+- **Cache:** Nach Änderungen an CSS oder JS die `?v=`-Nummer in allen drei HTML-Dateien hochzählen.
 
 ## Stil-Regeln des Inhabers (Sinan, SAKA Solutions)
 
@@ -60,3 +64,4 @@ Als Vorstandsmitglied ist Sinan für die Sponsoren jemand mit Amt, nicht der Die
 
 - 2026-09-14: Erste Fassung der Seite gebaut.
 - 2026-09-24: Als Repo gesichert. Geklärt: Sinan ist selbst im Vorstand, der Vorstand weiß Bescheid. Festgehalten, dass der eigene Verein nicht gegen das Ehrenamts-Kontingent zählt und dass beim Sponsorenkontakt nicht verkauft wird.
+- 2026-10-17: Seite fertig gebaut. Hero-Slider entfernt, statischer Hero mit Mannschaftsfoto und neutralem Text. Inhalte nach `daten.js` ausgelagert, damit Sinan selbst pflegen kann (kein Panel). Erfundene Beispiel-Posts und „Partner folgt"-Platzhalter entfernt. Neu: Kontaktbereich „Komm vorbei. Mach mit.", Footer mit SAKA-Hinweis, Impressum, Datenschutz, Icon-Sprite, Vorschaubild für WhatsApp, Favicons aus dem echten Wappen. Bilder von 4,2 MB auf unter 300 KB. Behoben: Hover mit Anheben (Stilregel), mobiles Menü war durch `backdrop-filter` am Header auf 140 px abgeschnitten. Geprüft bei 320, 375, 768 und 1440 px.

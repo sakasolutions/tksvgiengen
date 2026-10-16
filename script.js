@@ -1,81 +1,9 @@
+// Inhalte stehen in daten.js. Hier nur Darstellung und Verhalten.
+
 const menuButton = document.querySelector("[data-menu-button]");
 const menu = document.querySelector("[data-menu]");
-const hero = document.querySelector("[data-hero]");
-const heroViewport = document.querySelector("[data-hero-viewport]");
-const heroPager = document.querySelector("[data-hero-pager]");
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const HERO_INTERVAL = 7000;
-const TKSV_CREST = "assets/logo/logo.png";
-const OPPONENT_CREST_PLACEHOLDER = "assets/logo/opponent-placeholder.svg";
-
-// Später durch Admin-Daten ersetzen.
-const nextMatch = {
-  matchConfirmed: true,
-  homeTeam: "TKSV Giengen",
-  awayTeam: "Gegner folgt",
-  kickoff: "2026-09-20T15:00:00+02:00",
-  venue: "Spielort folgt",
-  isHome: true,
-  competition: "Kreisliga B4",
-  homeCrest: "",
-  awayCrest: "",
-  note: "",
-  ctaHref: "#spiele"
-};
-
-// Später durch Admin-Daten ersetzen.
-const TEAM_PHOTO = "assets/hero1.png";
-const teams = [
-  {
-    id: "aktive",
-    name: "Aktive",
-    shortName: "Aktive",
-    category: "Herren",
-    league: "Kreisliga B4",
-    image: "",
-    description: "",
-    coachName: "",
-    coachContact: "",
-    trainingTimes: [],
-    trainingVenue: "",
-    detailsHref: "https://www.fupa.net/club/tksv-giengen",
-    active: true,
-    order: 1
-  },
-  {
-    id: "reserve",
-    name: "Reserve",
-    shortName: "Reserve",
-    category: "Herren",
-    league: "Kreisliga B4 Reserve",
-    image: "",
-    description: "",
-    coachName: "",
-    coachContact: "",
-    trainingTimes: [],
-    trainingVenue: "",
-    detailsHref: "https://www.fupa.net/club/tksv-giengen",
-    active: true,
-    order: 2
-  }
-];
-// Später durch Admin-Daten ersetzen. Weitere Eckdaten in `facts` ergänzen.
-const club = {
-  eyebrow: "TKSV Giengen",
-  heading: "Seit 1986 in Giengen",
-  headingLines: ["Seit 1986", "in Giengen"],
-  year: "1986",
-  paragraphs: [
-    "Seit 1986 gehört der TKSV zum Fußball in Giengen. Auf und neben dem Platz wird der Verein von Spielern, Verantwortlichen und Unterstützern getragen.",
-    "Sportlicher Ehrgeiz, Zusammenhalt und ein aktives Vereinsleben bestimmen unseren gemeinsamen Weg."
-  ],
-  facts: [
-    { label: "Gegründet", value: "1986" },
-    { label: "Heimat", value: "Giengen" },
-    { label: "Vereinsfarben", value: "Rot / Weiß" }
-  ],
-  logo: ""
-};
+const MATCH_GRACE_MS = 2 * 60 * 60 * 1000;
+const SVG_NS = "http://www.w3.org/2000/svg";
 
 const SPONSOR_TIER_ORDER = ["main", "premium", "partner"];
 const SPONSOR_TIER_LABELS = {
@@ -84,119 +12,6 @@ const SPONSOR_TIER_LABELS = {
   partner: "Partner"
 };
 
-// Layout-Platzhalter. Durch echte Partner ersetzen; ein leeres Array blendet die Section aus.
-const sponsors = [
-  {
-    id: "placeholder-main",
-    name: "Hauptpartner folgt",
-    logo: "",
-    href: "",
-    tier: "main",
-    active: true,
-    order: 1
-  },
-  {
-    id: "placeholder-premium-1",
-    name: "Premiumpartner folgt",
-    logo: "",
-    href: "",
-    tier: "premium",
-    active: true,
-    order: 1
-  },
-  {
-    id: "placeholder-premium-2",
-    name: "Premiumpartner folgt",
-    logo: "",
-    href: "",
-    tier: "premium",
-    active: true,
-    order: 2
-  },
-  {
-    id: "placeholder-partner-1",
-    name: "Partner folgt",
-    logo: "",
-    href: "",
-    tier: "partner",
-    active: true,
-    order: 1
-  },
-  {
-    id: "placeholder-partner-2",
-    name: "Partner folgt",
-    logo: "",
-    href: "",
-    tier: "partner",
-    active: true,
-    order: 2
-  },
-  {
-    id: "placeholder-partner-3",
-    name: "Partner folgt",
-    logo: "",
-    href: "",
-    tier: "partner",
-    active: true,
-    order: 3
-  },
-  {
-    id: "placeholder-partner-4",
-    name: "Partner folgt",
-    logo: "",
-    href: "",
-    tier: "partner",
-    active: true,
-    order: 4
-  }
-];
-
-const socialPosts = [
-  {
-    id: "post-1",
-    platform: "instagram",
-    type: "image",
-    image: "",
-    title: "Auswärtssieg!",
-    caption: "Unsere erste Mannschaft gewinnt beim SV Elchingen souverän mit 5:0.",
-    publishedAt: "2026-09-13T18:00:00+02:00",
-    permalink: "#",
-    pinned: true,
-    hidden: false
-  },
-  {
-    id: "post-2",
-    platform: "instagram",
-    type: "image",
-    image: "",
-    title: "Neuigkeiten vom TKSV",
-    caption: "Aktuelle Meldungen und Einblicke aus unserem Vereinsleben.",
-    publishedAt: "2026-09-10T18:00:00+02:00",
-    permalink: "#",
-    pinned: false,
-    hidden: false
-  },
-  {
-    id: "post-3",
-    platform: "instagram",
-    type: "reel",
-    image: "",
-    title: "Auf und neben dem Platz",
-    caption: "Folgt dem TKSV Giengen und bleibt immer auf dem Laufenden.",
-    publishedAt: "2026-09-07T18:00:00+02:00",
-    permalink: "#",
-    pinned: false,
-    hidden: false
-  }
-];
-
-let visibleSlides = [];
-let heroDots = [];
-let heroIndex = 0;
-let heroTimer = null;
-let heroPaused = false;
-let swipeStartX = null;
-
 function setMenu(open) {
   menuButton.setAttribute("aria-expanded", String(open));
   menuButton.querySelector(".sr-only").textContent = open ? "Menü schließen" : "Menü öffnen";
@@ -204,33 +19,39 @@ function setMenu(open) {
   document.body.classList.toggle("menu-open", open);
 }
 
-menuButton.addEventListener("click", () => {
-  setMenu(menuButton.getAttribute("aria-expanded") !== "true");
-});
+if (menuButton && menu) {
+  menuButton.addEventListener("click", () => {
+    setMenu(menuButton.getAttribute("aria-expanded") !== "true");
+  });
 
-menu.addEventListener("click", (event) => {
-  if (event.target.closest("a")) setMenu(false);
-});
+  menu.addEventListener("click", (event) => {
+    if (event.target.closest("a")) setMenu(false);
+  });
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
-    setMenu(false);
-    menuButton.focus();
-  }
-});
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
+      setMenu(false);
+      menuButton.focus();
+    }
+  });
+}
 
 function filled(value) {
   return String(value ?? "").trim() !== "";
 }
 
-function isConfirmedMatch(match) {
-  return Boolean(
-    match?.matchConfirmed &&
-    filled(match.homeTeam) &&
-    filled(match.awayTeam) &&
-    filled(match.kickoff) &&
-    filled(match.venue)
-  );
+function icon(name) {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  const use = document.createElementNS(SVG_NS, "use");
+  use.setAttribute("href", `#i-${name}`);
+  svg.append(use);
+  return svg;
+}
+
+function isLivePermalink(url) {
+  return /^https?:\/\//i.test(String(url ?? "").trim());
 }
 
 function formatKickoff(iso) {
@@ -266,225 +87,29 @@ function setText(node, value) {
   if (node) node.textContent = value;
 }
 
-function crestSource(isClub, provided) {
-  if (isClub) return { src: TKSV_CREST, placeholder: false };
-  if (filled(provided)) return { src: provided, placeholder: false };
-  return { src: OPPONENT_CREST_PLACEHOLDER, placeholder: true };
+function isUpcomingMatch(match, now = Date.now()) {
+  if (!match?.matchConfirmed) return false;
+  if (![match.homeTeam, match.awayTeam, match.kickoff, match.venue].every(filled)) return false;
+  const kickoff = new Date(match.kickoff).getTime();
+  return !Number.isNaN(kickoff) && kickoff + MATCH_GRACE_MS > now;
 }
 
-function applyCrest(img, source, teamName) {
-  if (!img) return;
-  img.hidden = false;
-  img.classList.toggle("is-placeholder", source.placeholder);
-  img.alt = source.placeholder ? "Wappen folgt" : teamName;
-  img.src = source.src;
-  img.onerror = () => {
-    if (img.getAttribute("src") === OPPONENT_CREST_PLACEHOLDER) return;
-    img.onerror = null;
-    img.src = OPPONENT_CREST_PLACEHOLDER;
-    img.classList.add("is-placeholder");
-    img.alt = "Wappen folgt";
-  };
-}
+function renderMatchStrip(match) {
+  const strip = document.querySelector("[data-match-strip]");
+  if (!strip) return;
 
-function renderMatchPreview(match) {
-  const slide = document.querySelector("[data-match-slide]");
-  const confirmed = isConfirmedMatch(match);
+  const upcoming = isUpcomingMatch(match);
+  strip.classList.toggle("has-match", upcoming);
+  strip.querySelector("[data-strip-meta]").hidden = !upcoming;
+
+  if (!upcoming) return;
+
   const kickoff = formatKickoff(match.kickoff);
-
-  if (slide) {
-    slide.hidden = !confirmed;
-    if (!confirmed) {
-      slide.classList.remove("is-active");
-      slide.setAttribute("inert", "");
-      slide.setAttribute("aria-hidden", "true");
-    }
-  }
-
-  if (confirmed && slide) {
-    const fixture = slide.querySelector("[data-match-fixture]");
-    const competition = slide.querySelector("[data-match-competition]");
-    const note = slide.querySelector("[data-match-note]");
-    const cta = slide.querySelector("[data-match-cta]");
-    const homeIsClub = Boolean(match.isHome);
-    const awayIsClub = !homeIsClub;
-
-    setText(slide.querySelector("[data-match-side]"), match.isHome ? "Heimspiel" : "Auswärtsspiel");
-    setText(slide.querySelector("[data-match-home]"), match.homeTeam);
-    setText(slide.querySelector("[data-match-away]"), match.awayTeam);
-    setText(slide.querySelector("[data-match-kickoff]"), `${kickoff.long} · ${kickoff.time} Uhr`);
-    setText(slide.querySelector("[data-match-venue]"), match.venue);
-
-    fixture?.classList.add("has-crests");
-    applyCrest(
-      slide.querySelector("[data-match-home-crest]"),
-      crestSource(homeIsClub, match.homeCrest),
-      match.homeTeam
-    );
-    applyCrest(
-      slide.querySelector("[data-match-away-crest]"),
-      crestSource(awayIsClub, match.awayCrest),
-      match.awayTeam
-    );
-
-    if (competition) {
-      competition.hidden = !filled(match.competition);
-      setText(competition, match.competition);
-    }
-    if (note) {
-      note.hidden = !filled(match.note);
-      setText(note, match.note);
-    }
-    if (cta) cta.href = filled(match.ctaHref) ? match.ctaHref : "#spiele";
-  }
-
-  const title = document.querySelector("[data-strip-title]");
-  const detail = document.querySelector("[data-strip-detail]");
-  const date = document.querySelector("[data-strip-date]");
-  const venue = document.querySelector("[data-strip-venue]");
-
-  if (!confirmed) {
-    setText(title, "Termin folgt");
-    setText(detail, "Der nächste bestätigte Spieltermin erscheint hier.");
-    setText(date, "Datum offen");
-    setText(venue, "Spielort offen");
-    return;
-  }
-
-  setText(title, `${match.homeTeam} vs ${match.awayTeam}`);
-  setText(detail, `${kickoff.long} · ${kickoff.time} Uhr`);
-  setText(date, `${kickoff.short}, ${kickoff.time} Uhr`);
-  setText(venue, match.venue);
-}
-
-function prefersReducedMotion() {
-  return reduceMotion.matches;
-}
-
-function showHeroSlide(nextIndex) {
-  if (!visibleSlides.length) return;
-  heroIndex = (nextIndex + visibleSlides.length) % visibleSlides.length;
-
-  visibleSlides.forEach((slide, index) => {
-    const active = index === heroIndex;
-    slide.classList.toggle("is-active", active);
-    slide.toggleAttribute("inert", !active);
-    slide.setAttribute("aria-hidden", String(!active));
-  });
-
-  heroDots.forEach((dot, index) => {
-    const active = index === heroIndex;
-    dot.classList.toggle("is-active", active);
-    dot.setAttribute("aria-selected", String(active));
-  });
-
-  const current = visibleSlides[heroIndex];
-  const matchSlide = Boolean(current?.hasAttribute("data-match-slide"));
-  const strip = document.querySelector(".match-strip");
-
-  hero.dataset.heroTheme = current?.classList.contains("hero-slide--join") ? "join" : "dark";
-  hero.classList.toggle("is-match-slide", matchSlide);
-
-  if (strip) {
-    strip.toggleAttribute("inert", matchSlide);
-    strip.setAttribute("aria-hidden", String(matchSlide));
-  }
-}
-
-function stopHeroTimer() {
-  window.clearInterval(heroTimer);
-  heroTimer = null;
-}
-
-function startHeroTimer() {
-  stopHeroTimer();
-  if (heroPaused || prefersReducedMotion() || visibleSlides.length < 2) return;
-  heroTimer = window.setInterval(() => {
-    showHeroSlide(heroIndex + 1);
-  }, HERO_INTERVAL);
-}
-
-function pauseHero() {
-  heroPaused = true;
-  stopHeroTimer();
-}
-
-function resumeHero() {
-  heroPaused = false;
-  startHeroTimer();
-}
-
-function buildPager() {
-  if (!heroPager) return;
-  heroPager.replaceChildren();
-
-  visibleSlides.forEach((slide, index) => {
-    const label = slide.getAttribute("data-hero-label") || `Folie ${index + 1}`;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.setAttribute("role", "tab");
-    button.setAttribute("aria-controls", slide.id);
-    button.setAttribute("aria-label", `Folie ${index + 1}: ${label}`);
-    button.setAttribute("aria-selected", "false");
-    button.dataset.heroDot = "";
-    button.textContent = String(index + 1);
-    button.addEventListener("click", () => {
-      showHeroSlide(index);
-      startHeroTimer();
-    });
-    heroPager.append(button);
-  });
-
-  heroDots = [...heroPager.querySelectorAll("[data-hero-dot]")];
-}
-
-function initHeroSlider() {
-  if (!hero || !heroViewport) return;
-
-  renderMatchPreview(nextMatch);
-  visibleSlides = [...document.querySelectorAll("[data-hero-slide]")].filter((slide) => !slide.hidden);
-  buildPager();
-  showHeroSlide(0);
-
-  hero.addEventListener("mouseenter", pauseHero);
-  hero.addEventListener("mouseleave", resumeHero);
-  hero.addEventListener("focusin", pauseHero);
-  hero.addEventListener("focusout", (event) => {
-    if (!hero.contains(event.relatedTarget)) resumeHero();
-  });
-
-  heroViewport.addEventListener("touchstart", (event) => {
-    pauseHero();
-    swipeStartX = event.changedTouches[0].clientX;
-  }, { passive: true });
-
-  heroViewport.addEventListener("touchend", (event) => {
-    if (swipeStartX == null) return;
-    const distance = event.changedTouches[0].clientX - swipeStartX;
-    swipeStartX = null;
-    if (Math.abs(distance) > 48) showHeroSlide(heroIndex + (distance < 0 ? 1 : -1));
-    resumeHero();
-  }, { passive: true });
-
-  hero.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      showHeroSlide(heroIndex + 1);
-      startHeroTimer();
-    }
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      showHeroSlide(heroIndex - 1);
-      startHeroTimer();
-    }
-  });
-
-  reduceMotion.addEventListener("change", () => {
-    if (prefersReducedMotion()) stopHeroTimer();
-    else startHeroTimer();
-  });
-
-  startHeroTimer();
+  setText(strip.querySelector("[data-strip-kicker]"), "Nächstes Spiel");
+  setText(strip.querySelector("[data-strip-title]"), `${match.homeTeam} vs ${match.awayTeam}`);
+  setText(strip.querySelector("[data-strip-detail]"), `${kickoff.long} · ${kickoff.time} Uhr`);
+  setText(strip.querySelector("[data-strip-date]"), `${kickoff.short}, ${kickoff.time} Uhr`);
+  setText(strip.querySelector("[data-strip-venue]"), match.venue);
 }
 
 function formatNewsDate(iso) {
@@ -519,10 +144,6 @@ function selectSocialPosts(posts) {
     .slice(0, 3);
 }
 
-function isLivePermalink(url) {
-  return /^https?:\/\//i.test(String(url ?? "").trim());
-}
-
 function previewCaption(text, limit = 140) {
   const caption = String(text ?? "").trim();
   if (caption.length <= limit) return caption;
@@ -539,8 +160,8 @@ function platformLabel(platform) {
 function createReelBadge() {
   const badge = document.createElement("span");
   badge.className = "news-reel";
-  badge.setAttribute("aria-hidden", "true");
-  badge.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 6.5v11l10-5.5Z"/></svg>';
+  badge.setAttribute("aria-label", "Reel");
+  badge.append(icon("play"));
   return badge;
 }
 
@@ -560,6 +181,7 @@ function createPostMedia(post) {
     image.alt = "";
     image.width = 960;
     image.height = 540;
+    image.loading = "lazy";
     image.addEventListener("load", () => media.classList.add("has-image"));
     image.addEventListener("error", () => {
       media.classList.remove("has-image");
@@ -568,12 +190,7 @@ function createPostMedia(post) {
     media.append(image);
   }
 
-  if (post.type === "reel") {
-    const reel = createReelBadge();
-    reel.setAttribute("aria-label", "Reel");
-    reel.removeAttribute("aria-hidden");
-    media.append(reel);
-  }
+  if (post.type === "reel") media.append(createReelBadge());
 
   return media;
 }
@@ -583,15 +200,13 @@ function renderSocialPosts(posts) {
   const grid = document.querySelector("[data-news-grid]");
   if (!section || !grid) return;
 
-  const visible = selectSocialPosts(posts);
+  const visible = selectSocialPosts(posts || []);
+  const hasInstagram = isLivePermalink(links?.instagram);
   grid.replaceChildren();
+  grid.hidden = !visible.length;
+  section.hidden = !visible.length && !hasInstagram;
+  if (!visible.length) return;
 
-  if (!visible.length) {
-    section.hidden = true;
-    return;
-  }
-
-  section.hidden = false;
   grid.dataset.count = String(visible.length);
 
   visible.forEach((post, index) => {
@@ -658,6 +273,23 @@ function initSocialFeed() {
   renderSocialPosts(socialPosts);
 }
 
+// Alle Instagram-Links der Seite (Aktuelles, Kontakt, Footer) kommen aus links.instagram.
+function renderInstagramLinks() {
+  const live = isLivePermalink(links?.instagram);
+  const handle = filled(links?.instagramHandle) ? links.instagramHandle.trim() : "Instagram";
+
+  document.querySelectorAll("[data-instagram]").forEach((link) => {
+    link.hidden = !live;
+    const item = link.closest("li");
+    if (item) item.hidden = !live;
+    if (!live) return;
+    link.href = links.instagram.trim();
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.querySelectorAll("[data-instagram-handle]").forEach((node) => setText(node, handle));
+  });
+}
+
 function selectActiveTeams(items) {
   return items
     .filter((team) => team?.active === true && filled(team.name) && filled(team.id))
@@ -668,7 +300,7 @@ function sharedTeamPhoto(visible) {
   const images = [...new Set(visible.map((team) => team.image).filter(filled))];
   if (images.length === 1) return images[0];
   if (images.length > 1) return "";
-  return TEAM_PHOTO;
+  return teamPhoto;
 }
 
 function sharedDetailsHref(visible) {
@@ -715,6 +347,10 @@ function appendFact(list, label, value) {
   list.append(row);
 }
 
+function phoneHref(value) {
+  return `tel:${value.replace(/[^\d+]/g, "")}`;
+}
+
 function contactNode(contact) {
   if (!filled(contact)) return null;
   const value = contact.trim();
@@ -725,7 +361,7 @@ function contactNode(contact) {
     return link;
   }
   if (/^\+?[\d\s/()-]{6,}$/.test(value)) {
-    link.href = `tel:${value.replace(/[^\d+]/g, "")}`;
+    link.href = phoneHref(value);
     link.textContent = value;
     return link;
   }
@@ -739,13 +375,7 @@ function createFupaLink(href) {
   fupa.target = "_blank";
   fupa.rel = "noopener noreferrer";
   fupa.textContent = "Kader auf FuPa";
-  const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  icon.setAttribute("aria-hidden", "true");
-  icon.setAttribute("viewBox", "0 0 24 24");
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("d", "M7 17 17 7M8 7h9v9");
-  icon.append(path);
-  fupa.append(icon);
+  fupa.append(icon("arrow-up-right"));
   return fupa;
 }
 
@@ -809,9 +439,11 @@ function renderTeams(items) {
     media.className = "teams-media";
     const image = document.createElement("img");
     image.src = photo;
-    image.alt = "Mannschaft des TKSV Giengen";
-    image.width = 1932;
-    image.height = 1086;
+    image.alt = "";
+    image.width = 1920;
+    image.height = 1079;
+    image.loading = "lazy";
+    image.decoding = "async";
     media.append(image);
     layout.append(media);
   }
@@ -973,12 +605,13 @@ function createSponsorSlot(sponsor) {
   link.href = sponsor.href.trim();
   if (isLivePermalink(sponsor.href)) {
     link.target = "_blank";
-    link.rel = "noopener noreferrer";
+    link.rel = "noopener";
   }
   link.append(frame);
   return link;
 }
 
+// Ohne Partner bleibt die Section sichtbar und wirbt nur für eine Partnerschaft.
 function renderSponsors(items) {
   const section = document.querySelector("[data-sponsors]");
   const board = document.querySelector("[data-sponsors-board]");
@@ -989,13 +622,13 @@ function renderSponsors(items) {
   ));
 
   board.replaceChildren();
+  board.hidden = !visible.length;
+  section.classList.toggle("is-empty", !visible.length);
+  section.querySelectorAll("[data-sponsors-filled]").forEach((node) => { node.hidden = !visible.length; });
+  section.querySelectorAll("[data-sponsors-empty]").forEach((node) => { node.hidden = Boolean(visible.length); });
 
-  if (!visible.length) {
-    section.hidden = true;
-    return;
-  }
+  if (!visible.length) return;
 
-  section.hidden = false;
   const grouped = { main: [], premium: [], partner: [] };
   visible.forEach((item) => grouped[normalizeSponsorTier(item.tier)].push(item));
 
@@ -1013,11 +646,97 @@ function renderSponsors(items) {
   });
 }
 
-initHeroSlider();
+function createContactLine(kind, value) {
+  const link = document.createElement("a");
+  link.className = "join-line";
+  link.href = kind === "mail" ? `mailto:${value}` : phoneHref(value);
+  link.append(icon(kind));
+  const text = document.createElement("span");
+  text.textContent = value;
+  link.append(text);
+  return link;
+}
+
+function renderContacts(items, place) {
+  const list = document.querySelector("[data-contacts]");
+  if (!list) return;
+  list.replaceChildren();
+
+  (items || []).filter((item) => filled(item?.topic)).forEach((item) => {
+    const entry = document.createElement("div");
+    entry.className = "join-contact";
+
+    const topic = document.createElement("h3");
+    topic.textContent = item.topic.trim();
+    entry.append(topic);
+
+    const known = [item.name, item.phone, item.email].some(filled);
+    if (!known) {
+      const pending = document.createElement("p");
+      pending.className = "join-pending";
+      pending.textContent = "Ansprechpartner folgt";
+      entry.append(pending);
+    }
+
+    if (filled(item.name)) {
+      const name = document.createElement("p");
+      name.className = "join-name";
+      name.textContent = item.name.trim();
+      entry.append(name);
+    }
+    if (filled(item.phone)) entry.append(createContactLine("phone", item.phone.trim()));
+    if (filled(item.email)) entry.append(createContactLine("mail", item.email.trim()));
+
+    list.append(entry);
+  });
+
+  const lines = [place?.name, place?.street, place?.city].filter(filled).map((line) => line.trim());
+  if (lines.length) {
+    const entry = document.createElement("div");
+    entry.className = "join-contact";
+    const topic = document.createElement("h3");
+    topic.textContent = "Sportplatz";
+    const address = document.createElement("address");
+    address.className = "join-address";
+    lines.forEach((line, index) => {
+      if (index) address.append(document.createElement("br"));
+      address.append(line);
+    });
+    entry.append(topic, address);
+
+    const query = encodeURIComponent(lines.join(", "));
+    const route = document.createElement("a");
+    route.className = "join-line";
+    route.href = `https://www.google.com/maps/search/?api=1&query=${query}`;
+    route.target = "_blank";
+    route.rel = "noopener noreferrer";
+    route.append(icon("pin"));
+    const label = document.createElement("span");
+    label.textContent = "Route planen";
+    route.append(label);
+    entry.append(route);
+
+    list.append(entry);
+  }
+}
+
+// Navigationslinks auf ausgeblendete Bereiche ebenfalls ausblenden.
+function syncNavigation() {
+  document.querySelectorAll("nav a[href*='#']").forEach((link) => {
+    const id = link.getAttribute("href").split("#")[1];
+    const target = id ? document.getElementById(id) : null;
+    if (target) link.hidden = target.hidden;
+  });
+}
+
+renderMatchStrip(nextMatch);
 initSocialFeed();
+renderInstagramLinks();
 renderTeams(teams);
 renderClub(club);
 renderSponsors(sponsors);
+renderContacts(contacts, venue);
+syncNavigation();
 
 if (location.hash) {
   const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
